@@ -1,25 +1,112 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import { formatDate, formatTime } from './utils/timeFormat';
+import { useState } from "react";
+import "./App.css";
+import { Dashboard } from "./components/Dashboard";
+import { DataVisualization } from "./components/DataVisualization";
+import { UserManagement } from "./components/UserManagement";
+import { Settings } from "./components/Settings";
 
 function App() {
-  const [time, setTime] = useState(new Date());
+  const [activeTab, setActiveTab] = useState("home");
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const renderContent = () => {
+    // Only load the component when the corresponding tab is active
+    switch (activeTab) {
+      case "dashboard":
+        return <Dashboard />;
+      case "data":
+        return <DataVisualization />;
+      case "users":
+        return <UserManagement />;
+      case "settings":
+        return <Settings />;
+      default:
+        return <HomePage onNavigate={setActiveTab} />;
+    }
+  };
 
   return (
-    <>
-      <h1>Demo App</h1>
-      <p className='time'>
-        Today is {formatDate(time)} and it is {formatTime(time)}.
-      </p>
-    </>
-  )
+    <div className="app-container">
+      <header className="app-header">
+        <h1>Enterprise Dashboard</h1>
+        <nav className="main-nav">
+          <button
+            className={activeTab === "home" ? "active" : ""}
+            onClick={() => setActiveTab("home")}
+          >
+            Home
+          </button>
+          <button
+            className={activeTab === "dashboard" ? "active" : ""}
+            onClick={() => setActiveTab("dashboard")}
+          >
+            Dashboard
+          </button>
+          <button
+            className={activeTab === "data" ? "active" : ""}
+            onClick={() => setActiveTab("data")}
+          >
+            Data Visualization
+          </button>
+          <button
+            className={activeTab === "users" ? "active" : ""}
+            onClick={() => setActiveTab("users")}
+          >
+            User Management
+          </button>
+          <button
+            className={activeTab === "settings" ? "active" : ""}
+            onClick={() => setActiveTab("settings")}
+          >
+            Settings
+          </button>
+        </nav>
+      </header>
+
+      <main className="content-area">{renderContent()}</main>
+    </div>
+  );
 }
 
-export default App
+// Simple loading component
+function LoadingFallback({ title }) {
+  return (
+    <div className="loading-container">
+      <div className="loading-spinner"></div>
+      <p>Loading {title}...</p>
+    </div>
+  );
+}
+
+// Home page component
+function HomePage({ onNavigate }) {
+  return (
+    <div className="home-page">
+      <h2>Welcome to the Enterprise Dashboard</h2>
+      <p>Select a module to get started:</p>
+
+      <div className="feature-cards">
+        <div className="feature-card" onClick={() => onNavigate("dashboard")}>
+          <h3>Dashboard</h3>
+          <p>View key metrics and performance indicators</p>
+        </div>
+
+        <div className="feature-card" onClick={() => onNavigate("data")}>
+          <h3>Data Visualization</h3>
+          <p>Interactive charts and data analysis tools</p>
+        </div>
+
+        <div className="feature-card" onClick={() => onNavigate("users")}>
+          <h3>User Management</h3>
+          <p>Manage users, roles and permissions</p>
+        </div>
+
+        <div className="feature-card" onClick={() => onNavigate("settings")}>
+          <h3>Settings</h3>
+          <p>Configure application preferences</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;

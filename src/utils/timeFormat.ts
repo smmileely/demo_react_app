@@ -1,7 +1,6 @@
-export function formatTime(time: Date) {
-    return time.toLocaleTimeString();
+import moment from 'moment';
+
+export function getFormattedTime(time: Date) {
+    return moment(time).format('MMMM Do YYYY, h:mm:ss a')
 }
 
-export function formatDate(time: Date) {
-    return time.toLocaleDateString();
-}
