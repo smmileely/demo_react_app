@@ -38,12 +38,6 @@ function App() {
               Dashboard
             </button>
             <button
-              className={activeTab === "data" ? "active" : ""}
-              onClick={() => setActiveTab("data")}
-            >
-              Data Visualization
-            </button>
-            <button
               className={activeTab === "users" ? "active" : ""}
               onClick={() => setActiveTab("users")}
             >
