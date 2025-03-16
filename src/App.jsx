@@ -3,6 +3,7 @@ import "./App.css";
 import { Dashboard } from "./components/Dashboard";
 import { UserManagement } from "./components/UserManagement";
 import { Settings } from "./components/Settings";
+import { Clock } from "./components/Clock";
 
 function App() {
   const [activeTab, setActiveTab] = useState("home");
@@ -24,41 +25,43 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <h1>Enterprise Dashboard</h1>
-        <nav className="main-nav">
-          <button
-            className={activeTab === "home" ? "active" : ""}
-            onClick={() => setActiveTab("home")}
-          >
-            Home
-          </button>
-          <button
-            className={activeTab === "dashboard" ? "active" : ""}
-            onClick={() => setActiveTab("dashboard")}
-          >
-            Dashboard
-          </button>
-          <button
-            className={activeTab === "data" ? "active" : ""}
-            onClick={() => setActiveTab("data")}
-          >
-            Data Visualization
-          </button>
-          <button
-            className={activeTab === "users" ? "active" : ""}
-            onClick={() => setActiveTab("users")}
-          >
-            User Management
-          </button>
-          <button
-            className={activeTab === "settings" ? "active" : ""}
-            onClick={() => setActiveTab("settings")}
-          >
-            Settings
-          </button>
-        </nav>
+        <div>
+          <h1>Enterprise Dashboard</h1>
+          <nav className="main-nav">
+            <button
+              className={activeTab === "home" ? "active" : ""}
+              onClick={() => setActiveTab("home")}
+            >
+              Home
+            </button>
+            <button
+              className={activeTab === "dashboard" ? "active" : ""}
+              onClick={() => setActiveTab("dashboard")}
+            >
+              Dashboard
+            </button>
+            <button
+              className={activeTab === "data" ? "active" : ""}
+              onClick={() => setActiveTab("data")}
+            >
+              Data Visualization
+            </button>
+            <button
+              className={activeTab === "users" ? "active" : ""}
+              onClick={() => setActiveTab("users")}
+            >
+              User Management
+            </button>
+            <button
+              className={activeTab === "settings" ? "active" : ""}
+              onClick={() => setActiveTab("settings")}
+            >
+              Settings
+            </button>
+          </nav>
+        </div>
+        <Clock />
       </header>
-
       <main className="content-area">{renderContent()}</main>
     </div>
   );
