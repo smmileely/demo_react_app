@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import Fuse from "fuse.js";
 
 export function UserManagement() {
   const [users, setUsers] = useState([]);
@@ -103,13 +104,19 @@ export function UserManagement() {
     fetchUsers();
   }, []);
 
-  const filteredUsers = users.filter((user) => {
-    const matchesSearch =
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = selectedRole === "all" || user.role === selectedRole;
-    return matchesSearch && matchesRole;
-  });
+  const fuse = useMemo(
+    () =>
+      new Fuse(users, {
+        keys: ["name", "email"],
+        includeScore: true,
+      }),
+    [users]
+  );
+
+  const filteredUsers =
+    searchTerm.trim() != ""
+      ? fuse.search(searchTerm).map((t) => t.item)
+      : users;
 
   if (isLoading) {
     return <div className="loading-data">Loading user data...</div>;
