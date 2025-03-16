@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./App.css";
 import { Dashboard } from "./components/Dashboard";
-import { DataVisualization } from "./components/DataVisualization";
 import { UserManagement } from "./components/UserManagement";
 import { Settings } from "./components/Settings";
 
@@ -13,8 +12,6 @@ function App() {
     switch (activeTab) {
       case "dashboard":
         return <Dashboard />;
-      case "data":
-        return <DataVisualization />;
       case "users":
         return <UserManagement />;
       case "settings":
@@ -88,11 +85,6 @@ function HomePage({ onNavigate }) {
         <div className="feature-card" onClick={() => onNavigate("dashboard")}>
           <h3>Dashboard</h3>
           <p>View key metrics and performance indicators</p>
-        </div>
-
-        <div className="feature-card" onClick={() => onNavigate("data")}>
-          <h3>Data Visualization</h3>
-          <p>Interactive charts and data analysis tools</p>
         </div>
 
         <div className="feature-card" onClick={() => onNavigate("users")}>
