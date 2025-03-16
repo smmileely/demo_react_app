@@ -1,126 +1,106 @@
-"use client";
-
-import { useState, useEffect, useMemo } from "react";
 import Fuse from "fuse.js";
+import { useState } from "react";
+
+const USERS = [
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john.doe@example.com",
+    role: "admin",
+    status: "active",
+    lastLogin: "2023-10-26 09:45 AM",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane.smith@example.com",
+    role: "editor",
+    status: "active",
+    lastLogin: "2023-10-25 03:22 PM",
+  },
+  {
+    id: 3,
+    name: "Bob Johnson",
+    email: "bob.johnson@example.com",
+    role: "viewer",
+    status: "inactive",
+    lastLogin: "2023-10-20 11:15 AM",
+  },
+  {
+    id: 4,
+    name: "Alice Brown",
+    email: "alice.brown@example.com",
+    role: "admin",
+    status: "active",
+    lastLogin: "2023-10-26 08:30 AM",
+  },
+  {
+    id: 5,
+    name: "Charlie Wilson",
+    email: "charlie.wilson@example.com",
+    role: "editor",
+    status: "active",
+    lastLogin: "2023-10-24 02:45 PM",
+  },
+  {
+    id: 6,
+    name: "Diana Miller",
+    email: "diana.miller@example.com",
+    role: "viewer",
+    status: "pending",
+    lastLogin: "Never",
+  },
+  {
+    id: 7,
+    name: "Edward Davis",
+    email: "edward.davis@example.com",
+    role: "editor",
+    status: "active",
+    lastLogin: "2023-10-25 10:20 AM",
+  },
+  {
+    id: 8,
+    name: "Fiona Clark",
+    email: "fiona.clark@example.com",
+    role: "viewer",
+    status: "active",
+    lastLogin: "2023-10-23 04:10 PM",
+  },
+  {
+    id: 9,
+    name: "George Robinson",
+    email: "george.robinson@example.com",
+    role: "admin",
+    status: "inactive",
+    lastLogin: "2023-10-15 09:30 AM",
+  },
+  {
+    id: 10,
+    name: "Hannah Lee",
+    email: "hannah.lee@example.com",
+    role: "viewer",
+    status: "active",
+    lastLogin: "2023-10-26 11:05 AM",
+  },
+];
 
 export function UserManagement() {
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState(USERS);
   const [selectedRole, setSelectedRole] = useState("all");
 
-  useEffect(() => {
-    // Simulate fetching user data
-    const fetchUsers = async () => {
-      setIsLoading(true);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 900));
-
-      setUsers([
-        {
-          id: 1,
-          name: "John Doe",
-          email: "john.doe@example.com",
-          role: "admin",
-          status: "active",
-          lastLogin: "2023-10-26 09:45 AM",
-        },
-        {
-          id: 2,
-          name: "Jane Smith",
-          email: "jane.smith@example.com",
-          role: "editor",
-          status: "active",
-          lastLogin: "2023-10-25 03:22 PM",
-        },
-        {
-          id: 3,
-          name: "Bob Johnson",
-          email: "bob.johnson@example.com",
-          role: "viewer",
-          status: "inactive",
-          lastLogin: "2023-10-20 11:15 AM",
-        },
-        {
-          id: 4,
-          name: "Alice Brown",
-          email: "alice.brown@example.com",
-          role: "admin",
-          status: "active",
-          lastLogin: "2023-10-26 08:30 AM",
-        },
-        {
-          id: 5,
-          name: "Charlie Wilson",
-          email: "charlie.wilson@example.com",
-          role: "editor",
-          status: "active",
-          lastLogin: "2023-10-24 02:45 PM",
-        },
-        {
-          id: 6,
-          name: "Diana Miller",
-          email: "diana.miller@example.com",
-          role: "viewer",
-          status: "pending",
-          lastLogin: "Never",
-        },
-        {
-          id: 7,
-          name: "Edward Davis",
-          email: "edward.davis@example.com",
-          role: "editor",
-          status: "active",
-          lastLogin: "2023-10-25 10:20 AM",
-        },
-        {
-          id: 8,
-          name: "Fiona Clark",
-          email: "fiona.clark@example.com",
-          role: "viewer",
-          status: "active",
-          lastLogin: "2023-10-23 04:10 PM",
-        },
-        {
-          id: 9,
-          name: "George Robinson",
-          email: "george.robinson@example.com",
-          role: "admin",
-          status: "inactive",
-          lastLogin: "2023-10-15 09:30 AM",
-        },
-        {
-          id: 10,
-          name: "Hannah Lee",
-          email: "hannah.lee@example.com",
-          role: "viewer",
-          status: "active",
-          lastLogin: "2023-10-26 11:05 AM",
-        },
-      ]);
-      setIsLoading(false);
-    };
-
-    fetchUsers();
-  }, []);
-
-  const fuse = useMemo(
-    () =>
-      new Fuse(users, {
-        keys: ["name", "email"],
-        includeScore: true,
-      }),
-    [users]
-  );
-
-  const filteredUsers =
-    searchTerm.trim() != ""
-      ? fuse.search(searchTerm).map((t) => t.item)
-      : users;
-
-  if (isLoading) {
-    return <div className="loading-data">Loading user data...</div>;
-  }
+  const handleInputValueChange = (e) => {
+    const searchTerm = e.target.value;
+    if (searchTerm.trim() === "") {
+      setFilteredUsers(USERS);
+    }
+    const fuse = new Fuse(USERS, {
+      keys: ["name", "email"],
+      includeScore: true,
+    });
+    const results = fuse.search(searchTerm);
+    const filteredUsers = results.map((result) => result.item);
+    setFilteredUsers(filteredUsers);
+  };
 
   return (
     <div className="user-management-container">
@@ -131,8 +111,7 @@ export function UserManagement() {
           <input
             type="text"
             placeholder="Search users..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleInputValueChange}
             className="search-input"
           />
         </div>
