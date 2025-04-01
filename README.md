@@ -1,12 +1,23 @@
-# React + Vite
+This package was created to illustrate my article [✨ MHow I Reduced My React Bundle Size by 30% (With Real Examples)](https://www.frontendjoy.com/p/how-i-reduced-my-react-bundle-size-by-30-with-real-examples).
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Installation
+```bash
+npm install
+```
 
-Currently, two official plugins are available:
+## How to run the application
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Run the following command:
+```bash
+npm run dev
+```
 
-## Expanding the ESLint configuration
+1. Click on the link to open the file in your browser.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## How to bundle the application
+
+1. Run the following command:
+```bash
+npm run build
+```
+1. Find the final files inside the `dist` folder.
