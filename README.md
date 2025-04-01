@@ -20,4 +20,4 @@ npm run dev
 ```bash
 npm run build
 ```
-1. Find the final files inside the `dist` folder.
+2. Find the final files inside the `dist` folder.
