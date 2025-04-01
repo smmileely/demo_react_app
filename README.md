@@ -1,4 +1,4 @@
-This package was created to illustrate my article [✨ MHow I Reduced My React Bundle Size by 30% (With Real Examples)](https://www.frontendjoy.com/p/how-i-reduced-my-react-bundle-size-by-30-with-real-examples.
+This package was created to illustrate my article [✨ MHow I Reduced My React Bundle Size by 30% (With Real Examples)](https://www.frontendjoy.com/p/how-i-reduced-my-react-bundle-size-by-30-with-real-examples).
 
 ## Installation
 ```bash
@@ -20,4 +20,4 @@ npm run dev
 ```bash
 npm run build
 ```
-1. Find the final files inside the `dist` folder.
+2. Find the final files inside the `dist` folder.
