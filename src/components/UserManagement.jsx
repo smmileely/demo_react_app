@@ -1,4 +1,3 @@
-import Fuse from "fuse.js";
 import { useState } from "react";
 
 const USERS = [
@@ -93,6 +92,10 @@ export function UserManagement() {
     if (searchTerm.trim() === "") {
       setFilteredUsers(USERS);
     }
+
+    //Lazy load fuse.js
+    const Fuse = import("fuse.js").then((module) => module.default);
+
     const fuse = new Fuse(USERS, {
       keys: ["name", "email"],
       includeScore: true,
